@@ -14,7 +14,7 @@ export function Header({ className }: HeaderProps) {
   const { user, signOut } = useAuth();
 
   return (
-    <header className={cn("sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60", className)}>
+  <header className={cn("sticky top-0 z-50 w-full border-b border-gray-200/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60", className)}>
       <div className="container flex h-16 items-center justify-between">
         {/* Logo */}
         <div className="flex items-center space-x-2">
@@ -82,7 +82,7 @@ export function Header({ className }: HeaderProps) {
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="md:hidden border-t border-border/40 bg-background/95 backdrop-blur">
+  <div className="md:hidden border-t border-gray-200/40 bg-background/95 backdrop-blur">
           <div className="container py-4 space-y-4">
             <nav className="flex flex-col space-y-4">
               <a href="#features" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
@@ -95,7 +95,7 @@ export function Header({ className }: HeaderProps) {
                 Docs
               </a>
             </nav>
-            <div className="flex flex-col space-y-2 pt-4 border-t border-border/40">
+            <div className="flex flex-col space-y-2 pt-4 border-t border-gray-200/40">
               {user ? (
                 <>
                   <Link to="/dashboard">

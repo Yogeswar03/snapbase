@@ -99,7 +99,7 @@ export function Features() {
         {/* Feature Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {features.map((feature, index) => (
-            <Card key={index} className="shadow-card hover:shadow-elegant transition-all duration-300 border-border/50">
+            <Card key={index} className="shadow-card hover:shadow-elegant transition-all duration-300 border-gray-200/50">
               <CardHeader>
                 <div className="flex items-center justify-between mb-2">
                   <feature.icon className={`h-8 w-8 ${feature.color}`} />

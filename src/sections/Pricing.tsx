@@ -92,7 +92,7 @@ export function Pricing() {
             <Card 
               key={index} 
               className={`relative shadow-card hover:shadow-elegant transition-all duration-300 ${
-                plan.popular ? 'border-primary/50 ring-2 ring-primary/20' : 'border-border/50'
+                plan.popular ? 'border-primary/50 ring-2 ring-primary/20' : 'border-gray-200/50'
               }`}
             >
               {plan.popular && (

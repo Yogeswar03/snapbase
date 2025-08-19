@@ -155,7 +155,7 @@ export default function Dashboard() {
   if (startups.length === 0) {
     return (
       <div className="min-h-screen bg-gradient-subtle">
-        <div className="border-b border-border/40 bg-background/95 backdrop-blur">
+  <div className="border-b border-gray-200/40 bg-background/95 backdrop-blur">
           <div className="container mx-auto px-4 py-4">
             <div className="flex items-center justify-between">
               <h1 className="text-2xl font-bold flex items-center gap-2">
@@ -199,7 +199,7 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen bg-gradient-subtle">
       {/* Header */}
-      <div className="border-b border-border/40 bg-background/95 backdrop-blur">
+  <div className="border-b border-gray-200/40 bg-background/95 backdrop-blur">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">

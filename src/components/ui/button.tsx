@@ -23,7 +23,7 @@ const buttonVariants = cva(
         success: "bg-success text-success-foreground hover:bg-success/90 shadow-card",
         warning: "bg-warning text-warning-foreground hover:bg-warning/90 shadow-card",
         elegant: "bg-gradient-primary text-primary-foreground shadow-elegant hover:shadow-glow duration-300",
-        glass: "bg-background/80 backdrop-blur-sm border border-border/50 hover:bg-background/90 text-foreground shadow-card",
+  glass: "bg-background/80 backdrop-blur-sm border border-gray-200/50 hover:bg-background/90 text-foreground shadow-card",
       },
       size: {
         default: "h-10 px-4 py-2",
