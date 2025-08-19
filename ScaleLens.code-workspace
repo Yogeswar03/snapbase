@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "supabase",
+			"path": "../venture-fortune-teller-main/supabase"
+		},
+		{
+			"name": "ScaleLens",
+			"path": "."
+		}
+	],
+	"settings": {}
+}
