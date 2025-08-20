@@ -6,8 +6,16 @@ import { Info } from "lucide-react";
 import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
 import { Label } from "@/components/ui/label";
 
-export function CreateStartupDialog() {
-  const [open, setOpen] = useState(false);
+export function CreateStartupDialog({ forceOpen, onClose }: { forceOpen?: boolean, onClose?: () => void }) {
+  const [internalOpen, setInternalOpen] = useState(false);
+  const open = typeof forceOpen === 'boolean' ? forceOpen : internalOpen;
+  const setOpen = (val: boolean) => {
+    if (typeof forceOpen === 'boolean' && onClose) {
+      if (!val) onClose();
+    } else {
+      setInternalOpen(val);
+    }
+  };
   const [name, setName] = useState("");
   const [companyEmail, setCompanyEmail] = useState("");
   const [founderName, setFounderName] = useState("");

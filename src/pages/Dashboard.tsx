@@ -26,12 +26,14 @@ import {
 import { useAuth } from "@/contexts/AuthContext";
 import { useStartups, type Startup } from "@/hooks/useStartups";
 import { MetricsUpload } from "@/components/MetricsUpload";
+import { CreateStartupDialog } from "../components/CreateStartupDialog";
 import { usePredictions } from "@/hooks/usePredictions";
 import { useMetrics } from "@/hooks/useMetrics";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
 export default function Dashboard() {
+  const [forceOpenStartupDialog, setForceOpenStartupDialog] = useState(false);
   const [predictionLoading, setPredictionLoading] = useState(false);
   const { user, signOut } = useAuth();
   const { startups: rawStartups, loading: startupsLoading } = useStartups();
@@ -47,6 +49,11 @@ export default function Dashboard() {
   useEffect(() => {
     if (startups.length > 0 && !selectedStartup) {
       setSelectedStartup(startups[0]);
+    }
+    if (startups.length === 0) {
+      setForceOpenStartupDialog(true);
+    } else {
+      setForceOpenStartupDialog(false);
     }
   }, [startups, selectedStartup]);
 
@@ -166,6 +173,10 @@ export default function Dashboard() {
       </div>
 
       <div className="container mx-auto px-4 py-8 space-y-8">
+        {/* Show Add Startup dialog if no startups exist */}
+        {forceOpenStartupDialog && (
+          <CreateStartupDialog forceOpen onClose={() => setForceOpenStartupDialog(false)} />
+        )}
         {!selectedStartup ? (
           <div className="text-center py-16">
             <p className="text-muted-foreground">Select a startup to view its dashboard</p>
