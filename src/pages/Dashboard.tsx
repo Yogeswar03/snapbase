@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -44,11 +44,11 @@ export default function Dashboard() {
   const { predictions, latestPrediction, loading: predictionsLoading, refetchPredictions } = usePredictions(selectedStartup?.id);
 
   // Auto-select first startup when startups load
-  useState(() => {
+  useEffect(() => {
     if (startups.length > 0 && !selectedStartup) {
       setSelectedStartup(startups[0]);
     }
-  });
+  }, [startups, selectedStartup]);
 
   const generatePlaybook = async () => {
     if (!selectedStartup) return;
