@@ -63,14 +63,23 @@ export function MetricsUpload({ startupId }: MetricsUploadProps) {
         }
       });
     } else {
-      // Parse XLS/XLSX for preview
+      // Parse XLS/XLSX for preview and normalize keys
       const reader = new FileReader();
       reader.onload = (e) => {
         const data = new Uint8Array(e.target?.result as ArrayBuffer);
         const workbook = XLSX.read(data, { type: 'array' });
         const sheetName = workbook.SheetNames[0];
         const worksheet = workbook.Sheets[sheetName];
-        const json: CSVMetric[] = XLSX.utils.sheet_to_json(worksheet, { header: 0 });
+        let json: any[] = XLSX.utils.sheet_to_json(worksheet, { header: 0 });
+        // Normalize keys
+        json = json.map(row => {
+          const normalized: any = {};
+          Object.keys(row).forEach(key => {
+            const k = key.trim().toLowerCase().replace(/\s+/g, '_');
+            normalized[k] = row[key];
+          });
+          return normalized;
+        });
         setPreview(json.slice(0, 5));
       };
       reader.onerror = () => {
@@ -115,12 +124,21 @@ export function MetricsUpload({ startupId }: MetricsUploadProps) {
         });
       });
     } else {
-      // Parse XLS/XLSX for upload
+      // Parse XLS/XLSX for upload and normalize keys
       const data = await file.arrayBuffer();
       const workbook = XLSX.read(new Uint8Array(data), { type: 'array' });
       const sheetName = workbook.SheetNames[0];
       const worksheet = workbook.Sheets[sheetName];
-      metrics = XLSX.utils.sheet_to_json(worksheet, { header: 0 });
+      let json: any[] = XLSX.utils.sheet_to_json(worksheet, { header: 0 });
+      json = json.map(row => {
+        const normalized: any = {};
+        Object.keys(row).forEach(key => {
+          const k = key.trim().toLowerCase().replace(/\s+/g, '_');
+          normalized[k] = row[key];
+        });
+        return normalized;
+      });
+      metrics = json;
     }
 
     let successCount = 0;
