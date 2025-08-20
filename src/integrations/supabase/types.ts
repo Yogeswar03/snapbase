@@ -1,3 +1,38 @@
+      startup_team_members: {
+        Row: {
+          id: string;
+          startup_id: string;
+          name: string;
+          email: string | null;
+          role: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          startup_id: string;
+          name: string;
+          email?: string | null;
+          role?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          startup_id?: string;
+          name?: string;
+          email?: string | null;
+          role?: string | null;
+          created_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "startup_team_members_startup_id_fkey",
+            columns: ["startup_id"],
+            isOneToOne: false,
+            referencedRelation: "startups",
+            referencedColumns: ["id"],
+          }
+        ];
+      };
 export type Json =
   | string
   | number

@@ -1,3 +1,4 @@
+import { TeamSection } from "@/components/TeamSection";
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -345,27 +346,8 @@ export default function Dashboard() {
                 </CardContent>
               </Card>
 
-              {/* Founders Section */}
-              <Card className="col-span-1 md:col-span-2 lg:col-span-3">
-                <CardHeader>
-                  <CardTitle>Founders</CardTitle>
-                  <CardDescription>Meet the team behind this startup</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex flex-wrap gap-6">
-                    <div className="flex flex-col items-center">
-                      <User className="h-8 w-8 text-primary mb-1" />
-                      <div className="font-semibold">Founder</div>
-                      <div className="text-sm text-muted-foreground">Your Name</div>
-                    </div>
-                    <div className="flex flex-col items-center">
-                      <User className="h-8 w-8 text-primary mb-1" />
-                      <div className="font-semibold">Co-Founder</div>
-                      <div className="text-sm text-muted-foreground">Co-Founder Name</div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+              {/* Team Section */}
+              {selectedStartup && <TeamSection startupId={selectedStartup.id} />}
             </div>
           </>
         )}
