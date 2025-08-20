@@ -141,12 +141,14 @@ export function CreateStartupDialog({ forceOpen, onClose, onCreated }: { forceOp
                         <SelectValue placeholder="Select stage" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="idea">Idea</SelectItem>
-                        <SelectItem value="prototype">Prototype</SelectItem>
-                        <SelectItem value="mvp">MVP</SelectItem>
-                        <SelectItem value="early_stage">Early Stage</SelectItem>
-                        <SelectItem value="growth">Growth</SelectItem>
-                        <SelectItem value="mature">Mature</SelectItem>
+                        <>
+                          <SelectItem value="idea">Idea</SelectItem>
+                          <SelectItem value="prototype">Prototype</SelectItem>
+                          <SelectItem value="mvp">MVP</SelectItem>
+                          <SelectItem value="early_stage">Early Stage</SelectItem>
+                          <SelectItem value="growth">Growth</SelectItem>
+                          <SelectItem value="mature">Mature</SelectItem>
+                        </>
                       </SelectContent>
                     </Select>
                   </div>
@@ -192,15 +194,17 @@ export function CreateStartupDialog({ forceOpen, onClose, onCreated }: { forceOp
                         <SelectValue placeholder="Select sector" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="saas">SaaS</SelectItem>
-                        <SelectItem value="fintech">Fintech</SelectItem>
-                        <SelectItem value="healthtech">Healthtech</SelectItem>
-                        <SelectItem value="edtech">Edtech</SelectItem>
-                        <SelectItem value="ecommerce">E-Commerce</SelectItem>
-                        <SelectItem value="marketplace">Marketplace</SelectItem>
-                        <SelectItem value="ai_ml">AI/ML</SelectItem>
-                        <SelectItem value="biotech">Biotech</SelectItem>
-                        <SelectItem value="other">Other</SelectItem>
+                        <>
+                          <SelectItem value="saas">SaaS</SelectItem>
+                          <SelectItem value="fintech">Fintech</SelectItem>
+                          <SelectItem value="healthtech">Healthtech</SelectItem>
+                          <SelectItem value="edtech">Edtech</SelectItem>
+                          <SelectItem value="ecommerce">E-Commerce</SelectItem>
+                          <SelectItem value="marketplace">Marketplace</SelectItem>
+                          <SelectItem value="ai_ml">AI/ML</SelectItem>
+                          <SelectItem value="biotech">Biotech</SelectItem>
+                          <SelectItem value="other">Other</SelectItem>
+                        </>
                       </SelectContent>
                     </Select>
                   </div>
