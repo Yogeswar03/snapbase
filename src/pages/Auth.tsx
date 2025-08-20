@@ -285,7 +285,7 @@ export default function Auth() {
                       {/* Password Reset Dialog */}
                       <Dialog open={resetOpen} onOpenChange={setResetOpen}>
                         <DialogContent>
-                          <>
+                          
                             <DialogHeader>
                               <DialogTitle>Reset Password</DialogTitle>
                             </DialogHeader>
@@ -311,7 +311,7 @@ export default function Auth() {
                                 </Button>
                               </DialogFooter>
                             </form>
-                          </>
+                          
                         </DialogContent>
                       </Dialog>
                     </>
