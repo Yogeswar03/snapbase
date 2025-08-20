@@ -25,7 +25,6 @@ import {
 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useStartups, type Startup } from "@/hooks/useStartups";
-import { CreateStartupDialog } from "../components/CreateStartupDialog";
 import { MetricsUpload } from "@/components/MetricsUpload";
 import { usePredictions } from "@/hooks/usePredictions";
 import { useMetrics } from "@/hooks/useMetrics";
@@ -121,7 +120,6 @@ export default function Dashboard() {
               </Select>
             </div>
             <div className="flex items-center gap-3">
-              <CreateStartupDialog />
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="outline" size="sm">
