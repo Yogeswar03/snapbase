@@ -36,7 +36,7 @@ export function Hero() {
           </p>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-6">
             {user ? (
               <Link to="/dashboard">
                 <Button variant="hero" size="xl" className="shadow-glow">
@@ -62,6 +62,14 @@ export function Hero() {
                 </Link>
               </>
             )}
+          </div>
+          <div className="flex justify-center mb-12">
+            <Link to="/addstartup">
+              <Button variant="outline" size="lg">
+                Add Your Startup
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </Link>
           </div>
 
           {/* Trust indicators */}
