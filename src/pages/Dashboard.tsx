@@ -179,14 +179,12 @@ export default function Dashboard() {
             forceOpen
             onClose={() => setForceOpenStartupDialog(false)}
             onCreated={async (startupData) => {
-              // Actually create the startup in the backend
               const created = await createStartup({
                 name: startupData.name,
                 sector: startupData.sector,
                 stage: startupData.stage,
                 team_experience: Number(startupData.experience) || 0,
                 description: startupData.description,
-                // You can add more fields if your backend supports them
               });
               setForceOpenStartupDialog(false);
               if (created) setSelectedStartup(created);
