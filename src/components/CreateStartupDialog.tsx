@@ -37,7 +37,7 @@ export function CreateStartupDialog() {
       <Button onClick={() => setOpen(true)} variant="default" className="mx-auto block">Add Your Startup</Button>
       {open && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 overflow-auto">
-          <Card className="w-full max-w-lg mx-auto my-12 max-h-[90vh] overflow-y-auto">
+          <Card className="w-full max-w-lg mx-auto max-h-[90vh] overflow-y-auto">
             <CardHeader>
               <CardTitle>Add Your Startup</CardTitle>
               <p className="text-muted-foreground text-sm mt-2">
