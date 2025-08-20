@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import * as XLSX from "xlsx";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -34,32 +35,53 @@ export function MetricsUpload({ startupId }: MetricsUploadProps) {
     const selectedFile = event.target.files?.[0];
     if (!selectedFile) return;
 
-    if (!selectedFile.name.endsWith('.csv')) {
+    const ext = selectedFile.name.split('.').pop()?.toLowerCase();
+    if (ext !== 'csv' && ext !== 'xls' && ext !== 'xlsx') {
       toast({
         title: "Invalid file",
-        description: "Please select a CSV file",
+        description: "Please select a CSV, XLS, or XLSX file",
         variant: "destructive",
       });
       return;
     }
 
     setFile(selectedFile);
-    
-    // Parse CSV for preview
-    Papa.parse(selectedFile, {
-      header: true,
-      preview: 5,
-      complete: (results) => {
-        setPreview(results.data as CSVMetric[]);
-      },
-      error: (error) => {
+
+    if (ext === 'csv') {
+      Papa.parse(selectedFile, {
+        header: true,
+        preview: 5,
+        complete: (results) => {
+          setPreview(results.data as CSVMetric[]);
+        },
+        error: (error) => {
+          toast({
+            title: "Parse error",
+            description: `Failed to parse CSV: ${error.message}`,
+            variant: "destructive",
+          });
+        }
+      });
+    } else {
+      // Parse XLS/XLSX for preview
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const data = new Uint8Array(e.target?.result as ArrayBuffer);
+        const workbook = XLSX.read(data, { type: 'array' });
+        const sheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[sheetName];
+        const json: CSVMetric[] = XLSX.utils.sheet_to_json(worksheet, { header: 0 });
+        setPreview(json.slice(0, 5));
+      };
+      reader.onerror = () => {
         toast({
           title: "Parse error",
-          description: `Failed to parse CSV: ${error.message}`,
+          description: `Failed to parse Excel file`,
           variant: "destructive",
         });
-      }
-    });
+      };
+      reader.readAsArrayBuffer(selectedFile);
+    }
   };
 
   const validateMetric = (metric: CSVMetric): boolean => {
@@ -69,64 +91,74 @@ export function MetricsUpload({ startupId }: MetricsUploadProps) {
 
   const handleUpload = async () => {
     if (!file) return;
-
     setUploading(true);
-    
-    Papa.parse(file, {
-      header: true,
-      complete: async (results) => {
-        const metrics = results.data as CSVMetric[];
-        let successCount = 0;
-        let errorCount = 0;
-
-        for (const metric of metrics) {
-          if (!validateMetric(metric)) {
-            errorCount++;
-            continue;
-          }
-
-          try {
-            await addMetric({
-              startup_id: startupId,
-              revenue: parseFloat(metric.revenue),
-              expenses: parseFloat(metric.expenses),
-              burn_rate: parseFloat(metric.burn_rate),
-              runway: parseInt(metric.runway),
-              period_start: metric.period_start,
-              period_end: metric.period_end,
+    const ext = file.name.split('.').pop()?.toLowerCase();
+    let metrics: CSVMetric[] = [];
+    if (ext === 'csv') {
+      // Parse CSV fully for upload
+      await new Promise<void>((resolve, reject) => {
+        Papa.parse(file, {
+          header: true,
+          complete: (results) => {
+            metrics = results.data as CSVMetric[];
+            resolve();
+          },
+          error: (error) => {
+            toast({
+              title: "Upload failed",
+              description: `Failed to process CSV: ${error.message}`,
+              variant: "destructive",
             });
-            successCount++;
-          } catch (error) {
-            errorCount++;
+            setUploading(false);
+            reject(error);
           }
-        }
-
-        toast({
-          title: "Upload complete",
-          description: `${successCount} metrics uploaded successfully${errorCount > 0 ? `, ${errorCount} failed` : ''}`,
-          variant: errorCount > 0 ? "destructive" : "default",
         });
+      });
+    } else {
+      // Parse XLS/XLSX for upload
+      const data = await file.arrayBuffer();
+      const workbook = XLSX.read(new Uint8Array(data), { type: 'array' });
+      const sheetName = workbook.SheetNames[0];
+      const worksheet = workbook.Sheets[sheetName];
+      metrics = XLSX.utils.sheet_to_json(worksheet, { header: 0 });
+    }
 
-        if (successCount > 0) {
-          await refetchMetrics();
-          setFile(null);
-          setPreview([]);
-          if (fileInputRef.current) {
-            fileInputRef.current.value = '';
-          }
-        }
-        
-        setUploading(false);
-      },
-      error: (error) => {
-        toast({
-          title: "Upload failed",
-          description: `Failed to process CSV: ${error.message}`,
-          variant: "destructive",
-        });
-        setUploading(false);
+    let successCount = 0;
+    let errorCount = 0;
+    for (const metric of metrics) {
+      if (!validateMetric(metric)) {
+        errorCount++;
+        continue;
       }
+      try {
+        await addMetric({
+          startup_id: startupId,
+          revenue: parseFloat(metric.revenue),
+          expenses: parseFloat(metric.expenses),
+          burn_rate: parseFloat(metric.burn_rate),
+          runway: parseInt(metric.runway),
+          period_start: metric.period_start,
+          period_end: metric.period_end,
+        });
+        successCount++;
+      } catch (error) {
+        errorCount++;
+      }
+    }
+    toast({
+      title: "Upload complete",
+      description: `${successCount} metrics uploaded successfully${errorCount > 0 ? `, ${errorCount} failed` : ''}`,
+      variant: errorCount > 0 ? "destructive" : "default",
     });
+    if (successCount > 0) {
+      await refetchMetrics();
+      setFile(null);
+      setPreview([]);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+    }
+    setUploading(false);
   };
 
   return (
@@ -142,11 +174,11 @@ export function MetricsUpload({ startupId }: MetricsUploadProps) {
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="space-y-2">
-          <Label htmlFor="csv-upload">CSV File</Label>
+          <Label htmlFor="csv-upload">CSV or Excel File</Label>
           <Input
             id="csv-upload"
             type="file"
-            accept=".csv"
+            accept=".csv,.xls,.xlsx"
             ref={fileInputRef}
             onChange={handleFileSelect}
           />
@@ -157,6 +189,7 @@ export function MetricsUpload({ startupId }: MetricsUploadProps) {
           <FileText className="h-4 w-4" />
           <AlertDescription>
             <strong>Required columns:</strong> revenue, expenses, burn_rate, runway, period_start (YYYY-MM-DD), period_end (YYYY-MM-DD)
+            <br />You can upload either a CSV or Excel (.xls, .xlsx) file.
           </AlertDescription>
         </Alert>
 
@@ -168,6 +201,7 @@ export function MetricsUpload({ startupId }: MetricsUploadProps) {
               <table className="w-full text-sm">
                 <thead className="bg-muted/50">
                   <tr>
+                    <th className="p-2 text-left">Company</th>
                     <th className="p-2 text-left">Revenue</th>
                     <th className="p-2 text-left">Expenses</th>
                     <th className="p-2 text-left">Burn Rate</th>
