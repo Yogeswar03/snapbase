@@ -36,7 +36,7 @@ export function CreateStartupDialog() {
       {open && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
           <div className="flex items-center justify-center w-full min-h-screen">
-            <Card className="w-full max-w-lg mx-auto">
+            <Card className="w-full max-w-lg mx-auto overflow-auto max-h-screen">
               <CardHeader className="text-center">
                 <CardTitle>Add Your Startup</CardTitle>
               </CardHeader>
