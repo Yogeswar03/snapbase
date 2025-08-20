@@ -48,7 +48,7 @@ export function Hero() {
             ) : (
               <>
                 <Link to="/auth">
-                  <Button variant="hero" size="xl" className="shadow-glow">
+                  <Button variant="elegant" size="xl" className="shadow-glow">
                     <Zap className="mr-2 h-5 w-5" />
                     Get Started Free
                     <ArrowRight className="ml-2 h-5 w-5" />
