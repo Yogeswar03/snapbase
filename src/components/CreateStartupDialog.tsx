@@ -38,102 +38,130 @@ export function CreateStartupDialog() {
       {open && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 overflow-auto">
           <Card className="w-full max-w-lg mx-auto my-12 max-h-[90vh] overflow-y-auto">
-            <CardHeader className="text-center">
-                <CardTitle>Add Your Startup</CardTitle>
-                <p className="text-muted-foreground text-sm mt-2">Fill in as much detail as possible. <span className="inline-flex items-center"><Info className="h-4 w-4 ml-1" /></span></p>
-              </CardHeader>
-              <CardContent>
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <div className="flex items-center gap-1">
-                        <Label htmlFor="startup-name">Startup Name</Label>
-                        <Tooltip>
-                          <TooltipTrigger asChild><Info className="h-4 w-4 text-muted-foreground cursor-pointer" /></TooltipTrigger>
-                          <TooltipContent>Enter your official startup or project name.</TooltipContent>
-                        </Tooltip>
-                      </div>
-                      <Input id="startup-name" value={name} onChange={e => setName(e.target.value)} required placeholder="e.g. ScaleLens" />
+            <CardHeader>
+              <CardTitle>Add Your Startup</CardTitle>
+              <p className="text-muted-foreground text-sm mt-2">
+                Fill in as much detail as possible.
+                <span className="inline-flex items-center">
+                  <Info className="h-4 w-4 ml-1" />
+                </span>
+              </p>
+            </CardHeader>
+            <CardContent>
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {/* Startup Name */}
+                  <div>
+                    <div className="flex items-center gap-1">
+                      <Label htmlFor="startup-name">Startup Name</Label>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Info className="h-4 w-4 text-muted-foreground cursor-pointer" />
+                        </TooltipTrigger>
+                        <TooltipContent>Enter your official startup or project name.</TooltipContent>
+                      </Tooltip>
                     </div>
-                    <div>
-                      <div className="flex items-center gap-1">
-                        <Label htmlFor="company-email">Company Email</Label>
-                        <Tooltip>
-                          <TooltipTrigger asChild><Info className="h-4 w-4 text-muted-foreground cursor-pointer" /></TooltipTrigger>
-                          <TooltipContent>Use a business or founder email (not personal if possible).</TooltipContent>
-                        </Tooltip>
-                      </div>
-                      <Input id="company-email" type="email" value={companyEmail} onChange={e => setCompanyEmail(e.target.value)} required placeholder="e.g. hello@scalelens.com" />
-                    </div>
-                    <div>
-                      <div className="flex items-center gap-1">
-                        <Label htmlFor="founder-name">Founder Name</Label>
-                        <Tooltip>
-                          <TooltipTrigger asChild><Info className="h-4 w-4 text-muted-foreground cursor-pointer" /></TooltipTrigger>
-                          <TooltipContent>Who is the main founder? (Full name)</TooltipContent>
-                        </Tooltip>
-                      </div>
-                      <Input id="founder-name" value={founderName} onChange={e => setFounderName(e.target.value)} required placeholder="e.g. Jane Doe" />
-                    </div>
-                    <div>
-                      <div className="flex items-center gap-1">
-                        <Label htmlFor="co-founder">Co-Founder (Optional)</Label>
-                        <Tooltip>
-                          <TooltipTrigger asChild><Info className="h-4 w-4 text-muted-foreground cursor-pointer" /></TooltipTrigger>
-                          <TooltipContent>List a co-founder if you have one (optional).</TooltipContent>
-                        </Tooltip>
-                      </div>
-                      <Input id="co-founder" value={coFounder} onChange={e => setCoFounder(e.target.value)} placeholder="e.g. John Smith" />
-                    </div>
-                    <div>
-                      <div className="flex items-center gap-1">
-                        <Label htmlFor="stage">Stage</Label>
-                        <Tooltip>
-piush                          <TooltipTrigger asChild><Info className="h-4 w-4 text-muted-foreground cursor-pointer" /></TooltipTrigger>
-                          <TooltipContent>What stage is your startup? (e.g. Idea, Prototype, MVP, Growth, Revenue, Scaling)</TooltipContent>
-                        </Tooltip>
-                      </div>
-                      <Input id="stage" value={stage} onChange={e => setStage(e.target.value)} required placeholder="e.g. MVP, Growth, Revenue" />
-                    </div>
-                    <div>
-                      <div className="flex items-center gap-1">
-                        <Label htmlFor="phone">Founder Phone Number</Label>
-                        <Tooltip>
-                          <TooltipTrigger asChild><Info className="h-4 w-4 text-muted-foreground cursor-pointer" /></TooltipTrigger>
-                          <TooltipContent>Include country code if outside your region. (e.g. +1 555-123-4567)</TooltipContent>
-                        </Tooltip>
-                      </div>
-                      <Input id="phone" type="tel" value={phone} onChange={e => setPhone(e.target.value)} required placeholder="e.g. +1 555-123-4567" />
-                    </div>
-                    <div>
-                      <div className="flex items-center gap-1">
-                        <Label htmlFor="sector">Sector</Label>
-                        <Tooltip>
-                          <TooltipTrigger asChild><Info className="h-4 w-4 text-muted-foreground cursor-pointer" /></TooltipTrigger>
-                          <TooltipContent>What industry are you in? (e.g. SaaS, Fintech, Healthtech, Edtech, Marketplace, etc.)</TooltipContent>
-                        </Tooltip>
-                      </div>
-                      <Input id="sector" value={sector} onChange={e => setSector(e.target.value)} required placeholder="e.g. SaaS, Fintech, Healthtech" />
-                    </div>
-                    <div className="md:col-span-2">
-                      <div className="flex items-center gap-1">
-                        <Label htmlFor="description">Description (Optional)</Label>
-                        <Tooltip>
-                          <TooltipTrigger asChild><Info className="h-4 w-4 text-muted-foreground cursor-pointer" /></TooltipTrigger>
-                          <TooltipContent>Briefly describe your startup, product, or vision (1-2 sentences).</TooltipContent>
-                        </Tooltip>
-                      </div>
-                      <Input id="description" value={description} onChange={e => setDescription(e.target.value)} placeholder="e.g. AI-powered platform to predict startup success" />
-                    </div>
+                    <Input id="startup-name" value={name} onChange={e => setName(e.target.value)} required placeholder="e.g. ScaleLens" />
                   </div>
-                  <div className="flex justify-end gap-2 mt-4">
-                    <Button type="button" variant="outline" onClick={() => setOpen(false)}>Cancel</Button>
-                    <Button type="submit">Save</Button>
+                  {/* Company Email */}
+                  <div>
+                    <div className="flex items-center gap-1">
+                      <Label htmlFor="company-email">Company Email</Label>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Info className="h-4 w-4 text-muted-foreground cursor-pointer" />
+                        </TooltipTrigger>
+                        <TooltipContent>Use a business or founder email (not personal if possible).</TooltipContent>
+                      </Tooltip>
+                    </div>
+                    <Input id="company-email" type="email" value={companyEmail} onChange={e => setCompanyEmail(e.target.value)} required placeholder="e.g. hello@scalelens.com" />
                   </div>
-                </form>
-              </CardContent>
-            </Card>
-          </div>
+                  {/* Founder Name */}
+                  <div>
+                    <div className="flex items-center gap-1">
+                      <Label htmlFor="founder-name">Founder Name</Label>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Info className="h-4 w-4 text-muted-foreground cursor-pointer" />
+                        </TooltipTrigger>
+                        <TooltipContent>Who is the main founder? (Full name)</TooltipContent>
+                      </Tooltip>
+                    </div>
+                    <Input id="founder-name" value={founderName} onChange={e => setFounderName(e.target.value)} required placeholder="e.g. Jane Doe" />
+                  </div>
+                  {/* Co-Founder */}
+                  <div>
+                    <div className="flex items-center gap-1">
+                      <Label htmlFor="co-founder">Co-Founder (Optional)</Label>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Info className="h-4 w-4 text-muted-foreground cursor-pointer" />
+                        </TooltipTrigger>
+                        <TooltipContent>List a co-founder if you have one (optional).</TooltipContent>
+                      </Tooltip>
+                    </div>
+                    <Input id="co-founder" value={coFounder} onChange={e => setCoFounder(e.target.value)} placeholder="e.g. John Smith" />
+                  </div>
+                  {/* Stage */}
+                  <div>
+                    <div className="flex items-center gap-1">
+                      <Label htmlFor="stage">Stage</Label>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Info className="h-4 w-4 text-muted-foreground cursor-pointer" />
+                        </TooltipTrigger>
+                        <TooltipContent>What stage is your startup? (e.g. Idea, Prototype, MVP, Growth, Revenue, Scaling)</TooltipContent>
+                      </Tooltip>
+                    </div>
+                    <Input id="stage" value={stage} onChange={e => setStage(e.target.value)} required placeholder="e.g. MVP, Growth, Revenue" />
+                  </div>
+                  {/* Phone */}
+                  <div>
+                    <div className="flex items-center gap-1">
+                      <Label htmlFor="phone">Founder Phone Number</Label>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Info className="h-4 w-4 text-muted-foreground cursor-pointer" />
+                        </TooltipTrigger>
+                        <TooltipContent>Include country code if outside your region. (e.g. +1 555-123-4567)</TooltipContent>
+                      </Tooltip>
+                    </div>
+                    <Input id="phone" type="tel" value={phone} onChange={e => setPhone(e.target.value)} required placeholder="e.g. +1 555-123-4567" />
+                  </div>
+                  {/* Sector */}
+                  <div>
+                    <div className="flex items-center gap-1">
+                      <Label htmlFor="sector">Sector</Label>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Info className="h-4 w-4 text-muted-foreground cursor-pointer" />
+                        </TooltipTrigger>
+                        <TooltipContent>What industry are you in? (e.g. SaaS, Fintech, Healthtech, Edtech, Marketplace, etc.)</TooltipContent>
+                      </Tooltip>
+                    </div>
+                    <Input id="sector" value={sector} onChange={e => setSector(e.target.value)} required placeholder="e.g. SaaS, Fintech, Healthtech" />
+                  </div>
+                  {/* Description */}
+                  <div className="md:col-span-2">
+                    <div className="flex items-center gap-1">
+                      <Label htmlFor="description">Description (Optional)</Label>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Info className="h-4 w-4 text-muted-foreground cursor-pointer" />
+                        </TooltipTrigger>
+                        <TooltipContent>Briefly describe your startup, product, or vision (1-2 sentences).</TooltipContent>
+                      </Tooltip>
+                    </div>
+                    <Input id="description" value={description} onChange={e => setDescription(e.target.value)} placeholder="e.g. AI-powered platform to predict startup success" />
+                  </div>
+                </div>
+                <div className="flex justify-end gap-2 mt-4">
+                  <Button type="button" variant="outline" onClick={() => setOpen(false)}>Cancel</Button>
+                  <Button type="submit">Save</Button>
+                </div>
+              </form>
+            </CardContent>
+          </Card>
         </div>
       )}
     </TooltipProvider>
