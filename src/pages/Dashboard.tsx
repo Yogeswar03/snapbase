@@ -118,15 +118,14 @@ export default function Dashboard() {
                 <SelectTrigger className="w-64">
                   <SelectValue placeholder="Select startup" />
                 </SelectTrigger>
-                <SelectContent>
-                  <>
-                    {startups.map((startup) => (
-                      <SelectItem key={startup.id} value={startup.id}>
-                        {startup.name}
-                      </SelectItem>
-                    ))}
-                  </>
-                </SelectContent>
+               <SelectContent>
+  {startups.map((startup) => (
+    <SelectItem key={startup.id} value={startup.id}>
+      {startup.name}
+    </SelectItem>
+  ))}
+</SelectContent>
+
               </Select>
             </div>
             <div className="flex items-center gap-3">
