@@ -285,31 +285,33 @@ export default function Auth() {
                       {/* Password Reset Dialog */}
                       <Dialog open={resetOpen} onOpenChange={setResetOpen}>
                         <DialogContent>
-                          <DialogHeader>
-                            <DialogTitle>Reset Password</DialogTitle>
-                          </DialogHeader>
-                          <form onSubmit={handlePasswordReset} className="space-y-4">
-                            <div>
-                              <Label htmlFor="reset-email">Email</Label>
-                              <Input
-                                id="reset-email"
-                                type="email"
-                                value={resetEmail}
-                                onChange={e => setResetEmail(e.target.value)}
-                                required
-                                autoFocus
-                              />
-                            </div>
-                            <DialogFooter>
-                              <Button type="button" variant="outline" onClick={() => setResetOpen(false)}>
-                                Cancel
-                              </Button>
-                              <Button type="submit" disabled={resetLoading}>
-                                {resetLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
-                                Send Reset Link
-                              </Button>
-                            </DialogFooter>
-                          </form>
+                          <>
+                            <DialogHeader>
+                              <DialogTitle>Reset Password</DialogTitle>
+                            </DialogHeader>
+                            <form onSubmit={handlePasswordReset} className="space-y-4">
+                              <div>
+                                <Label htmlFor="reset-email">Email</Label>
+                                <Input
+                                  id="reset-email"
+                                  type="email"
+                                  value={resetEmail}
+                                  onChange={e => setResetEmail(e.target.value)}
+                                  required
+                                  autoFocus
+                                />
+                              </div>
+                              <DialogFooter>
+                                <Button type="button" variant="outline" onClick={() => setResetOpen(false)}>
+                                  Cancel
+                                </Button>
+                                <Button type="submit" disabled={resetLoading}>
+                                  {resetLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
+                                  Send Reset Link
+                                </Button>
+                              </DialogFooter>
+                            </form>
+                          </>
                         </DialogContent>
                       </Dialog>
                     </>

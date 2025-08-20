@@ -45,26 +45,28 @@ export function TeamSection({ startupId }: { startupId: string }) {
       </CardContent>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Add Teammate</DialogTitle>
-          </DialogHeader>
-          <div className="space-y-3">
-            <div>
-              <Label>Name</Label>
-              <Input value={name} onChange={e => setName(e.target.value)} required />
+          <>
+            <DialogHeader>
+              <DialogTitle>Add Teammate</DialogTitle>
+            </DialogHeader>
+            <div className="space-y-3">
+              <div>
+                <Label>Name</Label>
+                <Input value={name} onChange={e => setName(e.target.value)} required />
+              </div>
+              <div>
+                <Label>Email</Label>
+                <Input value={email} onChange={e => setEmail(e.target.value)} type="email" />
+              </div>
+              <div>
+                <Label>Role</Label>
+                <Input value={role} onChange={e => setRole(e.target.value)} placeholder="e.g. Engineer, Marketer" />
+              </div>
             </div>
-            <div>
-              <Label>Email</Label>
-              <Input value={email} onChange={e => setEmail(e.target.value)} type="email" />
-            </div>
-            <div>
-              <Label>Role</Label>
-              <Input value={role} onChange={e => setRole(e.target.value)} placeholder="e.g. Engineer, Marketer" />
-            </div>
-          </div>
-          <DialogFooter>
-            <Button onClick={handleAdd} disabled={saving || !name}>Add</Button>
-          </DialogFooter>
+            <DialogFooter>
+              <Button onClick={handleAdd} disabled={saving || !name}>Add</Button>
+            </DialogFooter>
+          </>
         </DialogContent>
       </Dialog>
     </Card>
