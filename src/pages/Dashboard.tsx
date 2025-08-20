@@ -20,7 +20,8 @@ import {
   Building2,
   Brain,
   Lightbulb,
-  TrendingDown
+  TrendingDown,
+  Settings as SettingsIcon
 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useStartups, type Startup } from "@/hooks/useStartups";
@@ -129,6 +130,22 @@ export default function Dashboard() {
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
+                  <DropdownMenuItem>
+                    <User className="mr-2 h-4 w-4" />
+                    Profile
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Building2 className="mr-2 h-4 w-4" />
+                    My Startups
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <SettingsIcon className="mr-2 h-4 w-4" />
+                    Settings
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Lightbulb className="mr-2 h-4 w-4" />
+                    Help
+                  </DropdownMenuItem>
                   <DropdownMenuItem onClick={signOut}>
                     <LogOut className="mr-2 h-4 w-4" />
                     Sign Out
