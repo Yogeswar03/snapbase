@@ -37,7 +37,7 @@ export function CreateStartupDialog() {
       <Button onClick={() => setOpen(true)} variant="default" className="mx-auto block">Add Your Startup</Button>
       {open && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 overflow-auto">
-          <Card className="w-full max-w-lg mx-auto my-12">
+          <Card className="w-full max-w-lg mx-auto my-12 max-h-[90vh] overflow-y-auto">
             <CardHeader className="text-center">
                 <CardTitle>Add Your Startup</CardTitle>
                 <p className="text-muted-foreground text-sm mt-2">Fill in as much detail as possible. <span className="inline-flex items-center"><Info className="h-4 w-4 ml-1" /></span></p>
@@ -89,7 +89,7 @@ export function CreateStartupDialog() {
                       <div className="flex items-center gap-1">
                         <Label htmlFor="stage">Stage</Label>
                         <Tooltip>
-                          <TooltipTrigger asChild><Info className="h-4 w-4 text-muted-foreground cursor-pointer" /></TooltipTrigger>
+piush                          <TooltipTrigger asChild><Info className="h-4 w-4 text-muted-foreground cursor-pointer" /></TooltipTrigger>
                           <TooltipContent>What stage is your startup? (e.g. Idea, Prototype, MVP, Growth, Revenue, Scaling)</TooltipContent>
                         </Tooltip>
                       </div>
