@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import * as XLSX from "xlsx";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -30,6 +30,18 @@ export function MetricsUpload({ startupId }: MetricsUploadProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
   const { addMetric, refetchMetrics } = useMetrics(startupId);
+  // Real-time polling for metrics after upload
+  useEffect(() => {
+    let interval: NodeJS.Timeout | null = null;
+    if (uploading) {
+      interval = setInterval(() => {
+        refetchMetrics();
+      }, 5000); // poll every 5 seconds
+    }
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [uploading, refetchMetrics]);
 
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0];

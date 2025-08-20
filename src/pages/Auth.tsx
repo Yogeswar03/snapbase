@@ -46,6 +46,7 @@ export default function Auth() {
   const [error, setError] = useState<string>("");
   const [authMode, setAuthMode] = useState<'email' | 'phone'>("email");
   const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
   const [otpSent, setOtpSent] = useState(false);
   const [otp, setOtp] = useState("");
   const navigate = useNavigate();
@@ -120,27 +121,46 @@ export default function Auth() {
     setError("");
     const formData = new FormData(e.currentTarget);
     if (authMode === "email") {
-      const email = formData.get("email") as string;
-      const password = formData.get("password") as string;
-      const { error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-      setLoading(false);
-      if (error) {
-        setError(error.message);
-      } else {
-        toast({
-          title: "Welcome back!",
-          description: "You've been signed in successfully.",
+      const emailVal = formData.get("email") as string;
+      if (!otpSent) {
+        // Request OTP for email
+        const { error } = await supabase.auth.signInWithOtp({
+          email: emailVal
         });
-        navigate("/dashboard");
+        setLoading(false);
+        if (error) {
+          setError(error.message);
+        } else {
+          setOtpSent(true);
+          setEmail(emailVal);
+          toast({
+            title: "OTP sent!",
+            description: "Check your email for the verification code.",
+          });
+        }
+      } else {
+        // Verify OTP for email
+        const { error } = await supabase.auth.verifyOtp({
+          email,
+          token: otp,
+          type: 'email',
+        });
+        setLoading(false);
+        if (error) {
+          setError(error.message);
+        } else {
+          toast({
+            title: "Welcome back!",
+            description: "You've been signed in successfully.",
+          });
+          navigate("/dashboard");
+        }
       }
     } else {
       // Phone login
       const phoneVal = formData.get("phone") as string;
       if (!otpSent) {
-        // Request OTP
+        // Request OTP for phone
         const { error } = await supabase.auth.signInWithOtp({
           phone: phoneVal
         });
@@ -149,15 +169,16 @@ export default function Auth() {
           setError(error.message);
         } else {
           setOtpSent(true);
+          setPhone(phoneVal);
           toast({
             title: "OTP sent!",
             description: "Check your phone for the verification code.",
           });
         }
       } else {
-        // Verify OTP
+        // Verify OTP for phone
         const { error } = await supabase.auth.verifyOtp({
-          phone: phoneVal,
+          phone,
           token: otp,
           type: 'sms',
         });
@@ -195,18 +216,26 @@ export default function Auth() {
           </CardHeader>
           <CardContent>
             <Tabs defaultValue="signin" className="space-y-4">
-              <TabsList className="grid w-full grid-cols-3">
+              <TabsList className="grid w-full grid-cols-2 mb-2">
                 <TabsTrigger value="signin">Sign In</TabsTrigger>
                 <TabsTrigger value="signup">Sign Up</TabsTrigger>
+              </TabsList>
+              <div className="flex justify-center mb-4">
                 <button
                   type="button"
-                  className={`text-xs px-2 py-1 rounded ${authMode === 'email' ? 'bg-primary text-white' : 'bg-muted'}`}
-                  onClick={() => { setAuthMode(authMode === 'email' ? 'phone' : 'email'); setOtpSent(false); setOtp(''); }}
-                  style={{ marginLeft: 8 }}
+                  className={`text-xs px-3 py-1 rounded border ${authMode === 'email' ? 'bg-primary text-white' : 'bg-muted'} mr-2`}
+                  onClick={() => { setAuthMode('email'); setOtpSent(false); setOtp(''); }}
                 >
-                  {authMode === 'email' ? 'Use Phone' : 'Use Email'}
+                  Access with Email
                 </button>
-              </TabsList>
+                <button
+                  type="button"
+                  className={`text-xs px-3 py-1 rounded border ${authMode === 'phone' ? 'bg-primary text-white' : 'bg-muted'}`}
+                  onClick={() => { setAuthMode('phone'); setOtpSent(false); setOtp(''); }}
+                >
+                  Access with Phone Number
+                </button>
+              </div>
 
               {error && (
                 <Alert variant="destructive">
@@ -225,19 +254,25 @@ export default function Auth() {
                           name="email"
                           type="email"
                           placeholder="Enter your email"
+                          value={email}
+                          onChange={e => setEmail(e.target.value)}
                           required
                         />
                       </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="signin-password">Password</Label>
-                        <Input
-                          id="signin-password"
-                          name="password"
-                          type="password"
-                          placeholder="Enter your password"
-                          required
-                        />
-                      </div>
+                      {otpSent && (
+                        <div className="space-y-2">
+                          <Label htmlFor="signin-otp">OTP</Label>
+                          <Input
+                            id="signin-otp"
+                            name="otp"
+                            type="text"
+                            placeholder="Enter OTP"
+                            value={otp}
+                            onChange={e => setOtp(e.target.value)}
+                            required
+                          />
+                        </div>
+                      )}
                       <div className="flex justify-end">
                         <button
                           type="button"
