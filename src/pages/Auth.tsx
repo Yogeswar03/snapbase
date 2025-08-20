@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -12,6 +13,9 @@ import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
 export default function Auth() {
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const redirectTo = searchParams.get("redirect") || "/dashboard";
   const [resetOpen, setResetOpen] = useState(false);
   const [resetEmail, setResetEmail] = useState("");
   const [resetLoading, setResetLoading] = useState(false);
@@ -50,11 +54,11 @@ export default function Auth() {
     const checkAuth = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (session) {
-        navigate("/dashboard");
+        navigate(redirectTo);
       }
     };
     checkAuth();
-  }, [navigate]);
+  }, [navigate, redirectTo]);
 
   const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -67,7 +71,7 @@ export default function Auth() {
     const firstName = formData.get("firstName") as string;
     const lastName = formData.get("lastName") as string;
 
-    const redirectUrl = `${window.location.origin}/dashboard`;
+  const redirectUrl = `${window.location.origin}${redirectTo}`;
 
     const { error } = await supabase.auth.signUp({
       email,
@@ -116,7 +120,7 @@ export default function Auth() {
         title: "Welcome back!",
         description: "You've been signed in successfully.",
       });
-      navigate("/dashboard");
+      navigate(redirectTo);
     }
   };
 

@@ -72,7 +72,7 @@ export function Hero() {
                 </Button>
               </Link>
             ) : (
-              <Link to="/auth">
+              <Link to="/auth?redirect=/addstartup">
                 <Button variant="outline" size="lg">
                   Add Your Startup
                   <ArrowRight className="ml-2 h-5 w-5" />
