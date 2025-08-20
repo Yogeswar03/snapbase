@@ -76,32 +76,6 @@ export function CreateStartupDialog() {
                     </div>
                     <Input id="company-email" type="email" value={companyEmail} onChange={e => setCompanyEmail(e.target.value)} required placeholder="e.g. hello@scalelens.com" />
                   </div>
-                  {/* Founder Name */}
-                  <div>
-                    <div className="flex items-center gap-1">
-                      <Label htmlFor="founder-name">Founder Name</Label>
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <Info className="h-4 w-4 text-muted-foreground cursor-pointer" />
-                        </TooltipTrigger>
-                        <TooltipContent>Who is the main founder? (Full name)</TooltipContent>
-                      </Tooltip>
-                    </div>
-                    <Input id="founder-name" value={founderName} onChange={e => setFounderName(e.target.value)} required placeholder="e.g. Jane Doe" />
-                  </div>
-                  {/* Co-Founder */}
-                  <div>
-                    <div className="flex items-center gap-1">
-                      <Label htmlFor="co-founder">Co-Founder (Optional)</Label>
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <Info className="h-4 w-4 text-muted-foreground cursor-pointer" />
-                        </TooltipTrigger>
-                        <TooltipContent>List a co-founder if you have one (optional).</TooltipContent>
-                      </Tooltip>
-                    </div>
-                    <Input id="co-founder" value={coFounder} onChange={e => setCoFounder(e.target.value)} placeholder="e.g. John Smith" />
-                  </div>
                   {/* Stage */}
                   <div>
                     <div className="flex items-center gap-1">
