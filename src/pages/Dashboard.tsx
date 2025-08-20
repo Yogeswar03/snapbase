@@ -161,14 +161,19 @@ export default function Dashboard() {
             </div>
           </div>
           {selectedStartup && (
-            <div className="flex items-center gap-4 mt-2">
-              <Badge variant="secondary">{selectedStartup.sector}</Badge>
-              <Badge variant="outline">{selectedStartup.stage}</Badge>
-              <span className="text-sm text-muted-foreground flex items-center gap-1">
-                <Calendar className="h-4 w-4" />
-                Created: {new Date(selectedStartup.created_at).toLocaleDateString()}
-              </span>
-            </div>
+            <>
+              <div className="flex items-center gap-4 mt-2">
+                <Badge variant="secondary">{selectedStartup.sector}</Badge>
+                <Badge variant="outline">{selectedStartup.stage}</Badge>
+                <span className="text-sm text-muted-foreground flex items-center gap-1">
+                  <Calendar className="h-4 w-4" />
+                  Created: {new Date(selectedStartup.created_at).toLocaleDateString()}
+                </span>
+              </div>
+              <div className="mt-2">
+                <TeamSection startupId={selectedStartup.id} />
+              </div>
+            </>
           )}
         </div>
       </div>
@@ -346,8 +351,7 @@ export default function Dashboard() {
                 </CardContent>
               </Card>
 
-              {/* Team Section */}
-              {selectedStartup && <TeamSection startupId={selectedStartup.id} />}
+              {/* Team Section moved to header */}
             </div>
           </>
         )}

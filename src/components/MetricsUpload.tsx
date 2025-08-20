@@ -143,9 +143,12 @@ export function MetricsUpload({ startupId }: MetricsUploadProps) {
 
     let successCount = 0;
     let errorCount = 0;
-    for (const metric of metrics) {
+    let errorDetails: string[] = [];
+    for (let i = 0; i < metrics.length; i++) {
+      const metric = metrics[i];
       if (!validateMetric(metric)) {
         errorCount++;
+        errorDetails.push(`Row ${i + 2}: Missing or invalid required fields.`); // +2 for header row
         continue;
       }
       try {
@@ -159,13 +162,14 @@ export function MetricsUpload({ startupId }: MetricsUploadProps) {
           period_end: metric.period_end,
         });
         successCount++;
-      } catch (error) {
+      } catch (error: any) {
         errorCount++;
+        errorDetails.push(`Row ${i + 2}: Upload failed (${error?.message || 'unknown error'})`);
       }
     }
     toast({
       title: "Upload complete",
-      description: `${successCount} metrics uploaded successfully${errorCount > 0 ? `, ${errorCount} failed` : ''}`,
+      description: `${successCount} metrics uploaded successfully${errorCount > 0 ? `, ${errorCount} failed` : ''}` + (errorDetails.length > 0 ? `\n${errorDetails.slice(0, 5).join('\n')}${errorDetails.length > 5 ? '\n...more errors' : ''}` : ''),
       variant: errorCount > 0 ? "destructive" : "default",
     });
     if (successCount > 0) {
