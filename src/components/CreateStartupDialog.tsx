@@ -14,6 +14,8 @@ export function CreateStartupDialog() {
   const [coFounder, setCoFounder] = useState("");
   const [stage, setStage] = useState("");
   const [phone, setPhone] = useState("");
+  const [cashflow, setCashflow] = useState("");
+  const [experience, setExperience] = useState("");
   const [sector, setSector] = useState("");
   const [description, setDescription] = useState("");
 
@@ -27,8 +29,12 @@ export function CreateStartupDialog() {
     setCoFounder("");
     setStage("");
     setPhone("");
-    setSector("");
-    setDescription("");
+  setSector("");
+  setDescription("");
+  setFounderName("");
+  setCoFounder("");
+  setCashflow("");
+  setExperience("");
     alert("Startup created! (Demo only)");
   };
 
@@ -76,6 +82,32 @@ export function CreateStartupDialog() {
                     </div>
                     <Input id="company-email" type="email" value={companyEmail} onChange={e => setCompanyEmail(e.target.value)} required placeholder="e.g. hello@scalelens.com" />
                   </div>
+                  {/* Founder Name */}
+                  <div>
+                    <div className="flex items-center gap-1">
+                      <Label htmlFor="founder-name">Founder Name</Label>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Info className="h-4 w-4 text-muted-foreground cursor-pointer" />
+                        </TooltipTrigger>
+                        <TooltipContent>Who is the main founder? (Full name)</TooltipContent>
+                      </Tooltip>
+                    </div>
+                    <Input id="founder-name" value={founderName} onChange={e => setFounderName(e.target.value)} required placeholder="e.g. Jane Doe" />
+                  </div>
+                  {/* Co-Founder (Optional) */}
+                  <div>
+                    <div className="flex items-center gap-1">
+                      <Label htmlFor="co-founder">Co-Founder (Optional)</Label>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Info className="h-4 w-4 text-muted-foreground cursor-pointer" />
+                        </TooltipTrigger>
+                        <TooltipContent>List a co-founder if you have one (optional).</TooltipContent>
+                      </Tooltip>
+                    </div>
+                    <Input id="co-founder" value={coFounder} onChange={e => setCoFounder(e.target.value)} placeholder="e.g. John Smith" />
+                  </div>
                   {/* Stage */}
                   <div>
                     <div className="flex items-center gap-1">
@@ -89,18 +121,31 @@ export function CreateStartupDialog() {
                     </div>
                     <Input id="stage" value={stage} onChange={e => setStage(e.target.value)} required placeholder="e.g. MVP, Growth, Revenue" />
                   </div>
-                  {/* Phone */}
+                  {/* Cashflow */}
                   <div>
                     <div className="flex items-center gap-1">
-                      <Label htmlFor="phone">Founder Phone Number</Label>
+                      <Label htmlFor="cashflow">Cashflow</Label>
                       <Tooltip>
                         <TooltipTrigger asChild>
                           <Info className="h-4 w-4 text-muted-foreground cursor-pointer" />
                         </TooltipTrigger>
-                        <TooltipContent>Include country code if outside your region. (e.g. +1 555-123-4567)</TooltipContent>
+                        <TooltipContent>Current monthly cashflow (USD).</TooltipContent>
                       </Tooltip>
                     </div>
-                    <Input id="phone" type="tel" value={phone} onChange={e => setPhone(e.target.value)} required placeholder="e.g. +1 555-123-4567" />
+                    <Input id="cashflow" type="number" value={cashflow} onChange={e => setCashflow(e.target.value)} required placeholder="e.g. 10000" />
+                  </div>
+                  {/* Experience */}
+                  <div className="md:col-span-2">
+                    <div className="flex items-center gap-1">
+                      <Label htmlFor="experience">Experience</Label>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Info className="h-4 w-4 text-muted-foreground cursor-pointer" />
+                        </TooltipTrigger>
+                        <TooltipContent>Briefly describe your or your team's experience.</TooltipContent>
+                      </Tooltip>
+                    </div>
+                    <Input id="experience" value={experience} onChange={e => setExperience(e.target.value)} required placeholder="e.g. 5 years in SaaS, ex-Google engineer" />
                   </div>
                   {/* Sector */}
                   <div>
