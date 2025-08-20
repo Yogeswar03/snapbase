@@ -119,11 +119,13 @@ export default function Dashboard() {
                   <SelectValue placeholder="Select startup" />
                 </SelectTrigger>
                 <SelectContent>
-                  {startups.map((startup) => (
-                    <SelectItem key={startup.id} value={startup.id}>
-                      {startup.name}
-                    </SelectItem>
-                  ))}
+                  <>
+                    {startups.map((startup) => (
+                      <SelectItem key={startup.id} value={startup.id}>
+                        {startup.name}
+                      </SelectItem>
+                    ))}
+                  </>
                 </SelectContent>
               </Select>
             </div>
