@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Info } from "lucide-react";
 import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
@@ -132,10 +133,22 @@ export function CreateStartupDialog({ forceOpen, onClose, onCreated }: { forceOp
                         <TooltipTrigger asChild>
                           <Info className="h-4 w-4 text-muted-foreground cursor-pointer" />
                         </TooltipTrigger>
-                        <TooltipContent>What stage is your startup? (e.g. Idea, Prototype, MVP, Growth, Revenue, Scaling)</TooltipContent>
+                        <TooltipContent>What stage is your startup?</TooltipContent>
                       </Tooltip>
                     </div>
-                    <Input id="stage" value={stage} onChange={e => setStage(e.target.value)} required placeholder="e.g. MVP, Growth, Revenue" />
+                    <Select value={stage} onValueChange={setStage} required>
+                      <SelectTrigger id="stage">
+                        <SelectValue placeholder="Select stage" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="idea">Idea</SelectItem>
+                        <SelectItem value="prototype">Prototype</SelectItem>
+                        <SelectItem value="mvp">MVP</SelectItem>
+                        <SelectItem value="early_stage">Early Stage</SelectItem>
+                        <SelectItem value="growth">Growth</SelectItem>
+                        <SelectItem value="mature">Mature</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
                   {/* Cashflow */}
                   <div>
@@ -150,18 +163,18 @@ export function CreateStartupDialog({ forceOpen, onClose, onCreated }: { forceOp
                     </div>
                     <Input id="cashflow" type="number" value={cashflow} onChange={e => setCashflow(e.target.value)} required placeholder="e.g. 10000" />
                   </div>
-                  {/* Experience */}
+                  {/* Team Experience (years) */}
                   <div className="md:col-span-2">
                     <div className="flex items-center gap-1">
-                      <Label htmlFor="experience">Experience</Label>
+                      <Label htmlFor="experience">Team Experience (years)</Label>
                       <Tooltip>
                         <TooltipTrigger asChild>
                           <Info className="h-4 w-4 text-muted-foreground cursor-pointer" />
                         </TooltipTrigger>
-                        <TooltipContent>Briefly describe your or your team's experience.</TooltipContent>
+                        <TooltipContent>How many years of relevant experience does your team have (average)?</TooltipContent>
                       </Tooltip>
                     </div>
-                    <Input id="experience" value={experience} onChange={e => setExperience(e.target.value)} required placeholder="e.g. 5 years in SaaS, ex-Google engineer" />
+                    <Input id="experience" type="number" min="0" value={experience} onChange={e => setExperience(e.target.value)} required placeholder="e.g. 5" />
                   </div>
                   {/* Sector */}
                   <div>
@@ -171,10 +184,25 @@ export function CreateStartupDialog({ forceOpen, onClose, onCreated }: { forceOp
                         <TooltipTrigger asChild>
                           <Info className="h-4 w-4 text-muted-foreground cursor-pointer" />
                         </TooltipTrigger>
-                        <TooltipContent>What industry are you in? (e.g. SaaS, Fintech, Healthtech, Edtech, Marketplace, etc.)</TooltipContent>
+                        <TooltipContent>What sector is your startup in?</TooltipContent>
                       </Tooltip>
                     </div>
-                    <Input id="sector" value={sector} onChange={e => setSector(e.target.value)} required placeholder="e.g. SaaS, Fintech, Healthtech" />
+                    <Select value={sector} onValueChange={setSector} required>
+                      <SelectTrigger id="sector">
+                        <SelectValue placeholder="Select sector" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="saas">SaaS</SelectItem>
+                        <SelectItem value="fintech">Fintech</SelectItem>
+                        <SelectItem value="healthtech">Healthtech</SelectItem>
+                        <SelectItem value="edtech">Edtech</SelectItem>
+                        <SelectItem value="ecommerce">E-Commerce</SelectItem>
+                        <SelectItem value="marketplace">Marketplace</SelectItem>
+                        <SelectItem value="ai_ml">AI/ML</SelectItem>
+                        <SelectItem value="biotech">Biotech</SelectItem>
+                        <SelectItem value="other">Other</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
                   {/* Description */}
                   <div className="md:col-span-2">
