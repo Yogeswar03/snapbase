@@ -6,7 +6,7 @@ import { Info } from "lucide-react";
 import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
 import { Label } from "@/components/ui/label";
 
-export function CreateStartupDialog({ forceOpen, onClose }: { forceOpen?: boolean, onClose?: () => void }) {
+export function CreateStartupDialog({ forceOpen, onClose, onCreated }: { forceOpen?: boolean, onClose?: () => void, onCreated?: (startup: any) => void }) {
   const [internalOpen, setInternalOpen] = useState(false);
   const open = typeof forceOpen === 'boolean' ? forceOpen : internalOpen;
   const setOpen = (val: boolean) => {
@@ -29,7 +29,22 @@ export function CreateStartupDialog({ forceOpen, onClose }: { forceOpen?: boolea
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Add logic to create startup (API call)
+    // Simulate creating a startup (replace with API call in production)
+    const newStartup = {
+      id: Date.now().toString(),
+      name,
+      companyEmail,
+      founderName,
+      coFounder,
+      stage,
+      phone,
+      sector,
+      description,
+      cashflow,
+      experience,
+      created_at: new Date().toISOString(),
+    };
+    if (onCreated) onCreated(newStartup);
     setOpen(false);
     setName("");
     setCompanyEmail("");
@@ -37,12 +52,10 @@ export function CreateStartupDialog({ forceOpen, onClose }: { forceOpen?: boolea
     setCoFounder("");
     setStage("");
     setPhone("");
-  setSector("");
-  setDescription("");
-  setFounderName("");
-  setCoFounder("");
-  setCashflow("");
-  setExperience("");
+    setSector("");
+    setDescription("");
+    setCashflow("");
+    setExperience("");
     alert("Startup created! (Demo only)");
   };
 
