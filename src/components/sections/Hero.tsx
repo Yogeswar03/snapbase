@@ -64,12 +64,21 @@ export function Hero() {
             )}
           </div>
           <div className="flex justify-center mb-12">
-            <Link to="/addstartup">
-              <Button variant="outline" size="lg">
-                Add Your Startup
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </Link>
+            {user ? (
+              <Link to="/addstartup">
+                <Button variant="outline" size="lg">
+                  Add Your Startup
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </Link>
+            ) : (
+              <Link to="/auth">
+                <Button variant="outline" size="lg">
+                  Add Your Startup
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </Link>
+            )}
           </div>
 
           {/* Trust indicators */}
