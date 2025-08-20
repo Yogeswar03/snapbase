@@ -236,19 +236,18 @@ export default function Dashboard() {
                 </CardContent>
               </Card>
 
-              {/* Tools Used */}
+              {/* Metrics Upload */}
               <Card className="col-span-1">
                 <CardHeader>
-                  <CardTitle>Tools Used</CardTitle>
-                  <CardDescription>Technologies powering your insights</CardDescription>
+                  <CardTitle>Upload Your Metrics</CardTitle>
+                  <CardDescription>Upload your CSV/XLS files to add financial metrics for predictions.</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <ul className="list-disc pl-5 space-y-1 text-sm">
-                    <li>Machine Learning for profit/loss prediction</li>
-                    <li>Growth prediction</li>
-                    <li>Cashflow and runway analysis</li>
-                    <li>Deathzone/failure probability</li>
-                  </ul>
+                  {selectedStartup ? (
+                    <MetricsUpload startupId={selectedStartup.id} />
+                  ) : (
+                    <div className="text-muted-foreground">Select a startup to upload metrics.</div>
+                  )}
                 </CardContent>
               </Card>
 
