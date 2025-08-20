@@ -29,9 +29,7 @@ export function CreateStartupDialog({ forceOpen, onClose, onCreated }: { forceOp
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulate creating a startup (replace with API call in production)
-    const newStartup = {
-      id: Date.now().toString(),
+    if (onCreated) onCreated({
       name,
       companyEmail,
       founderName,
@@ -42,9 +40,7 @@ export function CreateStartupDialog({ forceOpen, onClose, onCreated }: { forceOp
       description,
       cashflow,
       experience,
-      created_at: new Date().toISOString(),
-    };
-    if (onCreated) onCreated(newStartup);
+    });
     setOpen(false);
     setName("");
     setCompanyEmail("");
@@ -56,7 +52,6 @@ export function CreateStartupDialog({ forceOpen, onClose, onCreated }: { forceOp
     setDescription("");
     setCashflow("");
     setExperience("");
-    alert("Startup created! (Demo only)");
   };
 
   return (
